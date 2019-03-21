@@ -9,23 +9,23 @@ using namespace std;
 
 
 
-void Inicjuj(char plansza[3][3])
+void Initialize(char board[3][3])
 {
   for (int i=0;i<3;i++)
   {
     for(int j=0;j<3;j++)
     {
-      plansza[i][j]=' ';
+      board[i][j]=' ';
     }
   }
 }
-bool Czymoznaruszyc(char plansza[3][3])
+bool Canyoumove(char board[3][3])
 {
   for(int i=0;i<3;i++)
   {
     for (int j=0; j<3 ;j ++)
     {
-      if(plansza[i][j]==' ')
+      if(board[i][j]==' ')
       {
         return true;
       }
@@ -33,86 +33,86 @@ bool Czymoznaruszyc(char plansza[3][3])
   }
   return false;
 }
-void Pokaz(char plansza[3][3])
+void Show(char board[3][3])
 {
   cout<<" AKTUALNY WIDOK PLANSZY DO GRY:  "<<endl;
   for(int i=0;i<3;i++)
   {
     for(int j=0;j<3;j++)
     {
-        cout<<"|"<<"     "<<plansza[i][j];
+        cout<<"|"<<"     "<<board[i][j];
     }
     cout<<"|";
     cout<<endl;
     cout<<"-----------------------"<<endl;
   }
 }
-int Stangry(char plansza[3][3])
+int Gamestatus(char board[3][3])
 {
 
-  int czujkaX=0;
-  int czujkaO=0;
+  int sensorX=0;
+  int sensorO=0;
 
   for(int i=0;i<3;i++)
   {
-    czujkaX=0;
-    czujkaO=0;
+    sensorX=0;
+    sensorO=0;
     for(int j=0;j<3;j++)
   {
 
-    if(plansza[i][j]=='X')
+    if(board[i][j]=='X')
     {
-      czujkaX++;
+      sensorX++;
     }
-    else if(plansza[i][j]=='O')
+    else if(board[i][j]=='O')
     {
-      czujkaO++;
+      sensorO++;
     }
-    if(czujkaX==3)
+    if(sensorX==3)
     {
       return 10;
     }
-    else if(czujkaO==3)
+    else if(sensorO==3)
     {
       return -10;
     }
   }
 }
-  czujkaX=0;
-  czujkaO=0;
+  sensorX=0;
+  sensorO=0;
 
   for(int i=0;i<3;i++)
   {
-  czujkaX=0;
-  czujkaO=0;
+  sensorX=0;
+  sensorO=0;
     for(int j=0;j<3;j++)
     {
-      if(plansza[j][i]=='X')
+      if(board[j][i]=='X')
       {
-        czujkaX++;
+        sensorX++;
       }
-      else if(plansza[j][i]=='O')
+      else if(board[j][i]=='O')
       {
-        czujkaO++;
+        sensorO++;
       }
-      if(czujkaX==3)
+      if(sensorX==3)
       {
         return 10;
       }
-      else if(czujkaO==3)
+      else if(sensorO==3)
       {
         return -10;
       }
     }
   }
-  czujkaX=0;
-  czujkaO=0;
+  sensorX=0;
+  sensorO=0;
   // Sprawdzenie przekatnych
-  if(plansza[0][0]=='X' && plansza[1][1]=='X' && plansza[2][2]=='X'|| plansza[0][2]=='X' && plansza[1][1]=='X' && plansza[2][0]=='X')
+  if(board[0][0]=='X' && board[1][1]=='X' && board[2][2]=='X'|| board[0][2]=='X' && board[1][1]=='X' && board[2][0]=='X')
   {
     return 10;
   }
-  if(plansza[0][0]=='O' && plansza[1][1]=='O' && plansza[2][2]=='O'|| plansza[0][2]=='O' && plansza[1][1]=='O' && plansza[2][0]=='O')
+  if(board[0][0]=='O' && board[1][1]=='O' && board[2][2]=='O'|| board[0][2]=='O' && board[1][1]=='O' && board[2][0]=='O')
   {
     return -10;
   }
@@ -121,9 +121,9 @@ int Stangry(char plansza[3][3])
 
 }
 
-int MinMax(char plansza[3][3], int glebokosc, bool isMax)
+int MinMax(char board[3][3], int glebokosc, bool isMax)
 {
-  int score=Stangry(plansza);
+  int score=Gamestatus(board);
     if(score == 10)
     {
       return score;
@@ -134,7 +134,7 @@ int MinMax(char plansza[3][3], int glebokosc, bool isMax)
       return score;
     }
 
-    if(Czymoznaruszyc(plansza)== false)
+    if(Canyoumove(board)== false)
     {
       return 0;
     }
@@ -144,11 +144,11 @@ int MinMax(char plansza[3][3], int glebokosc, bool isMax)
           for (int i=0; i<3 ;i++)
           for(int j=0;j<3; j++)
           {
-            if(plansza[i][j]==' ')
+            if(board[i][j]==' ')
             {
-              plansza[i][j]='X';
-              best=max(best,MinMax(plansza,glebokosc+1,!isMax));
-              plansza[i][j]=' ';
+              board[i][j]='X';
+              best=max(best,MinMax(board,glebokosc+1,!isMax));
+              board[i][j]=' ';
             }
 
           }
@@ -163,11 +163,11 @@ else
   {
     for(int j=0;j<3;j++)
     {
-      if(plansza[i][j]==' ')
+      if(board[i][j]==' ')
       {
-        plansza[i][j]='O';
-        best=min(best,MinMax(plansza,glebokosc+1,!isMax));
-        plansza[i][j]=' ';
+        board[i][j]='O';
+        best=min(best,MinMax(board,glebokosc+1,!isMax));
+        board[i][j]=' ';
       }
     }
   }
@@ -177,55 +177,55 @@ else
       }
 
 
-void ruszaKomputer(char plansza[3][3])
+void ruszaKomputer(char board[3][3])
   {
     int bestVal= -1000;
-    int kolumny=-1;
-    int wiersze=-1;
+    int column=-1;
+    int line=-1;
       for(int i=0;i<3;i++)
       {
         for(int j=0;j<3;j++)
         {
-          if(plansza[i][j]==' ')
+          if(board[i][j]==' ')
           {
-            plansza[i][j]='X';
-            int moveVal=MinMax(plansza,0,false);
-            plansza[i][j]=' ';
+            board[i][j]='X';
+            int moveVal=MinMax(board,0,false);
+            board[i][j]=' ';
             if(moveVal > bestVal)
             {
-              kolumny=i;
-              wiersze=j;
+              column=i;
+              line=j;
               bestVal=moveVal;
             }
           }
         }
       }
-    plansza[kolumny][wiersze]='X';
+    board[column][line]='X';
   }
 
-int SprawdzDostepnoscPola(char plansza[3][3],int pole)
+int Checkfieldstatus(char board[3][3],int field)
 {
-  if(pole >= 0 && pole <= 3)
+  if(field >= 0 && field <= 3)
   {
-    if(pole==1 && plansza[0][0]==' ' || pole==2 && plansza[0][1]==' ' || pole==3 &&plansza[0][2]==' ')
+    if(field==1 && board[0][0]==' ' || field==2 && board[0][1]==' ' || field==3 &&board[0][2]==' ')
     {
       return 1;
     }
     else
     return -1;
   }
-  if(pole>3 && pole <= 6)
+  if(field>3 && field <= 6)
   {
-    if(pole==4 && plansza[1][0]==' ' || pole==5 && plansza[1][1]==' ' || pole==6 &&plansza[1][2]==' ')
+    if(field==4 && board[1][0]==' ' || field==5 && board[1][1]==' ' || field==6 &&board[1][2]==' ')
     {
       return 1;
     }
     else
     return -1;
   }
-  if(pole>=7 && pole <= 9)
+  if(field>=7 && field <= 9)
   {
-    if(pole==7 && plansza[2][0]==' ' || pole==8 && plansza[2][1]==' ' || pole==9 &&plansza[2][2]==' ')
+    if(field==7 && board[2][0]==' ' || field==8 && board[2][1]==' ' || field==9 &&board[2][2]==' ')
     {
       return 1;
     }
@@ -237,31 +237,31 @@ int SprawdzDostepnoscPola(char plansza[3][3],int pole)
 }
 
 
-void Wprowadz(char plansza[3][3],char znak)
+void Enter(char board[3][3],char Sign)
 {
-  int pole=1;
-  int ruch=0;
-  cout<<"WYBIERZ POLE OD 1-9!!!!"<<endl;
+  int field=1;
+  int motion=0;
+  cout<<"WYBIERZ field OD 1-9!!!!"<<endl;
   cout<<"                       "<<endl;
 
-while(znak != 'k' &&ruch!=9)
+while(Sign != 'k' &&motion!=9)
   {
-    ruch++;
+    motion++;
     cout<<"-------------------------------------"<<endl;
     cout<<"Kolej na kolejnego gracza!"<<endl;
-      if(znak=='O' )
+      if(Sign=='O' )
       {
-        znak='X';
+        Sign='X';
         cout<<"Rusza komputer"<<endl;
-        cout<<"Wykonano "<<ruch<<" ruchow!"<<endl;
-        ruszaKomputer(plansza);
-        Pokaz(plansza);
-        if(Stangry(plansza)==10)
+        cout<<"Wykonano "<<motion<<" motionow!"<<endl;
+        ruszaKomputer(board);
+        Show(board);
+        if(Gamestatus(board)==10)
         {
           cout<<"PRZEGRALES!!!"<<endl;
           break;
         }
-        if(Stangry(plansza)==-10)
+        if(Gamestatus(board)==-10)
         {
           cout<<"WYGRALES!!!"<<endl;
           break;
@@ -269,66 +269,66 @@ while(znak != 'k' &&ruch!=9)
 
        continue;
       }
-     else if (znak=='X')
+     else if (Sign=='X')
       {
-        znak='O';
-        cout<<"Wprowadz pole: "<<endl;
-        cin>>pole;
-          while(SprawdzDostepnoscPola(plansza,pole)==-1)
+        Sign='O';
+        cout<<"Enter field: "<<endl;
+        cin>>field;
+          while(Checkfieldstatus(board,field)==-1)
           {
-            cout<<"Pole zajete!!! Sprobuj jeszcze raz: "<<endl;
-            cin>>pole;
+            cout<<"field zajete!!! Sprobuj jeszcze raz: "<<endl;
+            cin>>field;
           }
-          cout<<"Wykonano "<<ruch<<" ruchow!"<<endl;
+          cout<<"Wykonano "<<motion<<" motionow!"<<endl;
         }
-      if(ruch==9 && Stangry(plansza)==0)
+      if(motion==9 && Gamestatus(board)==0)
       {
         cout<<"PADL REMIS!"<<endl;
-        Pokaz(plansza);
+        Show(board);
         break;
       }
 
-    switch(pole)
+    switch(field)
     {
     case 1:
-     plansza[0][0]=znak;
-     Pokaz(plansza);
+     board[0][0]=Sign;
+     Show(board);
       break;
     case 2:
-     plansza[0][1]=znak;
-     Pokaz(plansza);
+     board[0][1]=Sign;
+     Show(board);
     break;
     case 3:
-     plansza[0][2]=znak;
-     Pokaz(plansza);
+     board[0][2]=Sign;
+     Show(board);
     break;
     case 4:
-     plansza[1][0]=znak;
-     Pokaz(plansza);
+     board[1][0]=Sign;
+     Show(board);
     break;
     case 5:
-     plansza[1][1]=znak;
-     Pokaz(plansza);
+     board[1][1]=Sign;
+     Show(board);
     break;
     case 6:
-     plansza[1][2]=znak;
-     Pokaz(plansza);
+     board[1][2]=Sign;
+     Show(board);
     break;
     case 7:
-     plansza[2][0]=znak;
-     Pokaz(plansza);
+     board[2][0]=Sign;
+     Show(board);
     break;
     case 8:
-     plansza[2][1]=znak;
-     Pokaz(plansza);
+     board[2][1]=Sign;
+     Show(board);
     break;
     case 9:
-     plansza[2][2]=znak;
-     Pokaz(plansza);
+     board[2][2]=Sign;
+     Show(board);
     break;
     default:
-    cout<<"Niestety to nie ten znak"<<endl;
-    ruch--;
+    cout<<"Niestety to nie ten Sign"<<endl;
+    motion--;
     break;
   }
 
@@ -340,38 +340,38 @@ while(znak != 'k' &&ruch!=9)
 
 int main()
 {
-  char plansza[3][3];
-  char znak;
+  char board[3][3];
+  char Sign;
   //int wymiar;
 
 
 
 cout<<"GRA KOLKO I KRZYZYK!!!"<<endl;
-cout<<"Jaki wymiar ma miec plansza 3x3...NxN ???"<<endl;
+cout<<"Jaki wymiar ma miec board 3x3...NxN ???"<<endl;
 //cout<<"Podaj wymiar : "<<endl;
 //cin>>wymiar;
-//char plansza[wymiar][wymiar];
+//char board[wymiar][wymiar];
 cout<<"Zaczyna gracz? Tak(T) lub Nie(N)"<<endl;
-cin>>znak;
+cin>>Sign;
 /*
-while(znak == 'T' || znak == 't' || znak == 'N' || znak == 'n')
+while(Sign == 'T' || Sign == 't' || Sign == 'N' || Sign == 'n')
 {
-  cout<<"JESTEM TUTAJ: "<<znak<<endl;
-  cout<<"Wprowadzono zly znak! Sprobuj jeszcze raz: "<<endl;
-  cin>>znak;
+  cout<<"JESTEM TUTAJ: "<<Sign<<endl;
+  cout<<"Enterono zly Sign! Sprobuj jeszcze raz: "<<endl;
+  cin>>Sign;
 }
 */
-  if(znak == 'T' || znak == 't')
+  if(Sign == 'T' || Sign == 't')
     {
-      znak='X';
-      Inicjuj(plansza);
-      Wprowadz(plansza,znak);
+      Sign='X';
+      Initialize(board);
+      Enter(board,Sign);
     }
-    else if(znak == 'N' || znak== 'n')
+    else if(Sign == 'N' || Sign== 'n')
     {
-      znak='O';
-      Inicjuj(plansza);
-      Wprowadz(plansza,znak);
+      Sign='O';
+      Initialize(board);
+      Enter(board,Sign);
     }
 return 0;
 }
