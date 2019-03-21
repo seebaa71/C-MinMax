@@ -241,7 +241,7 @@ void Enter(char board[3][3],char Sign)
 {
   int field=1;
   int motion=0;
-  cout<<"WYBIERZ field OD 1-9!!!!"<<endl;
+  cout<<"WYBIERZ pole OD 1-9!!!!"<<endl;
   cout<<"                       "<<endl;
 
 while(Sign != 'k' &&motion!=9)
@@ -253,7 +253,7 @@ while(Sign != 'k' &&motion!=9)
       {
         Sign='X';
         cout<<"Rusza komputer"<<endl;
-        cout<<"Wykonano "<<motion<<" motionow!"<<endl;
+        cout<<"Wykonano "<<motion<<" ruchow!"<<endl;
         ruszaKomputer(board);
         Show(board);
         if(Gamestatus(board)==10)
@@ -272,14 +272,14 @@ while(Sign != 'k' &&motion!=9)
      else if (Sign=='X')
       {
         Sign='O';
-        cout<<"Enter field: "<<endl;
+        cout<<"Enter pole: "<<endl;
         cin>>field;
           while(Checkfieldstatus(board,field)==-1)
           {
-            cout<<"field zajete!!! Sprobuj jeszcze raz: "<<endl;
+            cout<<"Pole zajete!!! Sprobuj jeszcze raz: "<<endl;
             cin>>field;
           }
-          cout<<"Wykonano "<<motion<<" motionow!"<<endl;
+          cout<<"Wykonano "<<motion<<" ruchow!"<<endl;
         }
       if(motion==9 && Gamestatus(board)==0)
       {
@@ -347,7 +347,7 @@ int main()
 
 
 cout<<"GRA KOLKO I KRZYZYK!!!"<<endl;
-cout<<"Jaki wymiar ma miec board 3x3...NxN ???"<<endl;
+cout<<"Jaki wymiar ma miec plansza 3x3...NxN ???"<<endl;
 //cout<<"Podaj wymiar : "<<endl;
 //cin>>wymiar;
 //char board[wymiar][wymiar];
