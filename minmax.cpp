@@ -105,8 +105,7 @@ int Gamestatus(char board[3][3])
       }
     }
   }
-  sensorX=0;
-  sensorO=0;
+
   // Sprawdzenie przekatnych
   if(board[0][0]=='X' && board[1][1]=='X' && board[2][2]=='X'|| board[0][2]=='X' && board[1][1]=='X' && board[2][0]=='X')
   {
@@ -342,25 +341,15 @@ int main()
 {
   char board[3][3];
   char Sign;
-  //int wymiar;
+
 
 
 
 cout<<"GRA KOLKO I KRZYZYK!!!"<<endl;
 cout<<"Jaki wymiar ma miec plansza 3x3...NxN ???"<<endl;
-//cout<<"Podaj wymiar : "<<endl;
-//cin>>wymiar;
-//char board[wymiar][wymiar];
 cout<<"Zaczyna gracz? Tak(T) lub Nie(N)"<<endl;
 cin>>Sign;
-/*
-while(Sign == 'T' || Sign == 't' || Sign == 'N' || Sign == 'n')
-{
-  cout<<"JESTEM TUTAJ: "<<Sign<<endl;
-  cout<<"Enterono zly Sign! Sprobuj jeszcze raz: "<<endl;
-  cin>>Sign;
-}
-*/
+
   if(Sign == 'T' || Sign == 't')
     {
       Sign='X';
